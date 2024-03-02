@@ -1,0 +1,40 @@
+# PLUGIN: Ping
+# AUTHOR: Omar Al-Sakka
+
+  local temp_loop=0;
+  local temp_counter=0;
+  local temp_time="";
+  local temp_no_of=5;
+  local temp_percentage=0;
+
+  if [ "${user_text[$next_cmd_pos]}" ]; then
+    writeln;
+    valid "ip" "${user_text[$next_cmd_pos]}" || echo -n "*";
+    writeln "Type escape sequence to abort.";
+    writeln "Sending $temp_no_of, 100-byte ICMP Echos to '${user_text[$next_cmd_pos]}', timeout is 2 seconds:";
+    while true; do
+      [ "$temp_loop" = "$temp_no_of" ] && break;
+      local sys_ping=`/bin/ping -s 100 -c 1 -w 2 "${user_text[$next_cmd_pos]}" 2< /dev/null `;
+      if ! [ "${sys_ping/, 0% packet loss/}" = "$sys_ping" ]; then 
+        echo -n "!";
+        (( temp_counter++ ));
+      elif ! [ "${sys_ping/Destination Host Unreachable/}" = "$sys_ping" ]; then echo -n "U";
+      elif ! [ "${sys_ping/+1 errors/}" = "$sys_ping" ]; then echo -n "E";
+      elif ! [ "${sys_ping/0 packets received/}" = "$sys_ping" ]; then echo -n ".";
+      else
+        writeln;
+        writeln "%e Unknown host '${user_text[$next_cmd_pos]}'.";
+        break;
+      fi
+      writeln "%d output - $sys_ping";
+      (( temp_loop++ ));
+    done;
+    if [ "$sys_ping" ]; then
+      writeln;
+      (( temp_percentage = ( $temp_counter / $temp_no_of ) * 100 ));
+      writeln "Success rate is $temp_percentage percent ($temp_counter/$temp_loop),round-trip min/avg/max = N/A ms.";
+    fi
+    break;
+  fi
+
+return 1;

@@ -1,0 +1,14 @@
+# Enter a Host Description.
+
+if [ "$field_config_mode" = "1" ]; then
+  if [ "$edit_type" = "host" ]; then
+    if [ "$cmd_pos" = "0" ]; then
+      if [ "${user_text[$next_cmd_pos]}" ]; then
+        reconfigure "add" "host" "$edit_id" "description" "${user_text[$next_cmd_pos]}";
+        break;
+      fi
+    fi
+  fi
+fi
+
+  return 1;

@@ -1,0 +1,14 @@
+host test_1:description Local HostTest..:group 1:ipa 127.0.0.1:request ns_lookup:alert sessions
+host test_2:description localHostTest 2.:group 1:ipa 127.0.0.1:request echo_reply:request http_1.0:alert email omar:alert sessions
+host ns1:description VI Primary DNS Server:group 10:ipa 194.88.77.1:request echo_reply:request ns_lookup
+host imo:description imoz desktop machine:group 1:request echo_reply:request http_1.0:alert email root
+host router:description My home Router:group 69:ipa 192.168.69.254:request echo_reply:alert sms 999
+host hindenburg:description my desktop pc...:group 69:ipa 192.168.69.128:request echo_reply:alert email omar
+host ts1.bb:group 102:ipa 212.78.64.254
+host gwa:group 102:ipa 212.78.71.138
+host gwf:group 102:ipa 212.78.72.33
+host gwf_temp:group 102:ipa 194.88.77.11
+host loopback:group 1:ipa 127.0.0.1
+host gwb:group 102:ipa 212.78.66.148:shutdown
+host gibbson:description The Gibbson:ipa 192.168.1.248:group 69:request echo_reply:alert sessions
+host www.vi.net:description VI WebServer:group 10:ipa 212.78.65.148:request http_1.0

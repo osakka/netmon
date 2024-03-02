@@ -1,0 +1,48 @@
+# System.
+
+### System Debugging.
+if [ "$debug" = "1" ]; then
+  if [ "$negate" = "1" ]; then
+    writeln "%d system debugging off.";
+    system_debug=0;
+    return 0;
+  else
+    system_debug=1;
+    writeln "%d system debugging on.";
+    return 0;
+  fi
+fi
+
+if [ $show -eq 1 ]; then
+  writeln;
+### Get Some Values BeforeHand.
+  local system_uptime=`/usr/bin/uptime`;
+  local uptime=${system_uptime/,*/};
+  local users=${system_uptime/$uptime,/};
+  local load=${users/*:/};
+  local users=${users/,*/};
+  local uptime=${uptime/*up/};
+  local -a system_information=(`/bin/uname -a`);
+  local system_name="`/bin/hostname`";
+
+  record_exists "lock" "tracker" && get_value "cycle_time" && tct=$current_data;
+  record_exists "lock" "collector" && get_value "cycle_time" && cct=$current_data;
+
+### Display System Information.
+  writeln "\040NETworkMONitor (v$version) System Reporter.";
+  writeln "\040--------------------------------------";
+  writeln "\040hostname        $system_name";
+  writeln "\040load averages   $load";
+  writeln "\040connections     $users";
+  writeln "\040uptime          $uptime";
+  writeln "\040kernel          ${system_information[0]}";
+  writeln "\040architecture    ${system_information[10]}";
+  writeln "\040processor       ${system_information[11]}";
+  writeln "\040tracker pid     $tracker_pid / cycle $tct secs";
+  writeln "\040collector pid   $collector_pid / cycle $cct secs";
+  writeln "\040session pid     $$";
+  writeln "\040---------------------------- ---- -- -";
+  return 0;
+fi
+
+return 1;

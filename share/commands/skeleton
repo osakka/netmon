@@ -1,0 +1,24 @@
+# REQUEST: skeleton
+# by Omar Al-Sakka
+#
+# Return Values.
+# 0 - Did not respond.
+# 1 - Responded
+# $feature_return (return 1/0).
+# $feature_time   (time taken)
+
+if [ "$netmon" = "1" ]; then
+  feature_return="1";
+  local feature_time="";
+  if [ "$1" ]; then
+    if valid "ip" "$1"; then
+      local request=` 2> /dev/null `;
+      if ! [ "${sys_ping/WHAT WAS MATCHED/}" = "$request" ]; then
+        writeln "%d $0 return $feature_return";
+        writeln "%d $0 time  $feature_time";
+        feature_return="0";  
+      fi
+    fi
+  fi
+  return $feature_return;
+else echo "This is a netmon command definition file."; fi

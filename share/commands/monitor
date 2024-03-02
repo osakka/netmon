@@ -1,0 +1,17 @@
+# Monitor.
+
+  if [ "$negate" = "0" ]; then
+    if [ "$cmd_pos" = "0" ]; then
+      writeln "%d starting monitor.";
+      return 0;
+    fi
+  else
+    if [ "$cmd_pos" = "1" ]; then
+      if ! [ "$monitor_pid" = "0" ]; then
+        writeln "%d stopping monitor.";
+        return 0;
+      fi
+    fi
+  fi
+
+return 1;

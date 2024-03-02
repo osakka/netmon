@@ -1,0 +1,7 @@
+group 1:name TEST Group:track loopback
+group 69:name another test:track gibbson
+group 100:name GROUP100:track router
+group 101:name GROUP101
+group 102:name GROUP102:track loopback
+group 224:shutdown
+group 244:track imo:name TEST

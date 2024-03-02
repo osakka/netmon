@@ -1,0 +1,124 @@
+### Host.
+
+if [ "$enable_mode" = "1" ]; then
+  ### Delete a Host.
+  if [ "$negate" = "1" ]; then
+    if [ "$config_mode" = "1" ]; then
+      if [ "$field_config_mode" = "0" ]; then
+        [ "${user_text[$next_cmd_pos]}" ] || return 1;
+        if reconfigure "del" "host" "${user_text[$next_cmd_pos]}"; then
+          writeln "%s host '${user_text[$next_cmd_pos]}' deleted";
+        else writeln "%e non-existant host."; fi
+        break;
+      fi
+    fi
+  else
+  ### [RE]-Configure a host.
+    if [ "$config_mode" = "1" ]; then
+      [ "${user_text[$next_cmd_pos]}" ] || return 1;
+      if record_exists "host" "${user_text[$next_cmd_pos]}"; then
+        writeln "%d editing host '${user_text[$next_cmd_pos]}'.";
+      else  
+        reconfigure "add" "host" "${user_text[$next_cmd_pos]}"; 
+        reconfigure "add" "host" "${user_text[$next_cmd_pos]}" "group 1:shutdown";
+      fi    
+      field_config_mode=1;
+      edit_type="host";
+      edit_id="${user_text[$next_cmd_pos]}";
+      break;
+    fi
+  fi
+fi
+
+### Show host(s) Configuration.
+if [ $show -eq 1 ]; then
+  if [ $config -eq 1 ]; then
+    if [ "${user_text[$next_cmd_pos]}" ]; then
+      ### Display a host.
+      if record_exists "host" "${user_text[$next_cmd_pos]}"; then
+        ### Single host Header.
+        writeln;
+        local item=0;
+        local temp_item=0;
+        while [ "${field[$item]}" ]; do
+          writeln "\040> ${field[$item]}";
+          [ $item = $MAX_FIELDS ] && break;
+          (( item++ ));
+        done;
+        writeln;
+        break;
+      else
+        writeln "%e no such record ${user_text[$next_cmd_pos]}.";
+        break;
+      fi
+    else
+      ### Display All Hosts.
+      local line_count=0;
+      load_records "$config_dir/hosts";
+      local rec_id=0;
+
+      ### Generic Header.
+      writeln "Realtime Config...\n";
+      writeln "! netmon v$version configuration";
+      writeln "! config_file: $config_dir/hosts";
+      writeln "! device_name: $nickname";
+      writeln "! displaying hosts configured";
+      writeln;
+
+      ### Parse Record(s), and display according to $1.
+      while parse_record $rec_id; do
+        writeln "%d record index $rec_id.";
+        local item=1;
+        ### Type of Show Selection.
+        if [ "$data_type" = "host" ]; then
+          writeln "$data_type $type_id";
+          while [ "${field[$item]}" ]; do
+            writeln "\040${field[$item]}";
+            [ $item = $MAX_FIELDS ] && break;
+            (( item++ ));
+          done;
+          writeln "!";
+          (( line_count++ ));
+        fi
+        ### End Of Display.
+        (( rec_id++ ));
+      done;
+      ### Show Config Record Count.
+      [ "$break_now" = "0" ] && writeln "! total \"$line_count\" host(s)";
+      return 0;
+    fi
+  else
+    local rec_id=0;
+    ### Show Current Status.
+    echo "Displaying Status...\n\n\040HOSTNAME\t\tADDRESS\t\t       STATUS";
+    writeln "%u \040------------------------------------------------------------------";
+      load_records "$run_dir/hosts";
+      while parse_record $rec_id; do
+        writeln "%d record index $rec_id.";
+        echo -n " ";
+        local item=0;
+        ### Type of Show Selection.
+        while [ "${field[$item]}" ]; do
+          field_type=${field[$item]/ */};
+          field_data=(${field[$item]/*$field_type /});
+          if [ "$field_type" = "feature_return" ]; then
+            [ "$field_data" = "0" ] && field_data="up";
+            [ "$field_data" = "1" ] && field_data="down";
+            [ "$field_data" = "A" ] && field_data="Administrativly down";
+            [ "$field_data" = "I" ] && field_data="IPA undefined";
+          fi
+          justify "$field_data" "22";
+          echo -n "$field_data$spacer";
+          [ $item = $MAX_FIELDS ] && break;
+          (( item++ ));
+        done;
+        writeln;
+        (( rec_id++ ));
+      done;
+    writeln "%u \040--------------------------------------------------------- --- -- -";
+    writeln "\040total \"$rec_id\" host(s)";
+    return 0;
+  fi
+fi
+
+return 1;
