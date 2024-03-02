@@ -1,5 +1,0 @@
-# Version.
-
-  [ "$show" = "1" ] && writeln "NETworkMONitor (v$version)." && return 0;
-
-  return 1;

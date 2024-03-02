@@ -1,4 +1,0 @@
-### Help.
-
-  writeln "%s Help Facility not implemented.";
-  break;
