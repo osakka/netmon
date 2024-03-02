@@ -1,4 +1,0 @@
-lock temporary
-lock collector:pid 693:cycle_time 81
-lock session_1331:pid 1331:user omar:terminal not a tty
-lock session_17322:pid 17322:user omar:terminal not a tty

@@ -1,9 +1,0 @@
-service http
-service telnet
-service ssh
-service session
-default-gateway 192.168.69.254
-hostname Prototype
-nameserver 192.168.1.1
-nameserver 194.112.32.1
-nameserver 194.88.77.1

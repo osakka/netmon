@@ -1,2 +1,0 @@
-interface eth0:ipa 192.168.69.69:masked_bits 24:description Ethernet Interface 0
-interface lo0:ipa 127.0.0.1:masked_bits 8:description LoopBack Device.
