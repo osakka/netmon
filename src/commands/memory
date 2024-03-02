@@ -1,0 +1,20 @@
+# Memory.
+
+if [ $show -eq 1 ]; then
+  writeln;
+  ### Get Values.
+  local sys_memstat=(`/bin/free` );
+  local sys_vmemstat=(`/usr/bin/vmstat` );
+  ### Display Details.
+  writeln "\040NETworkMONitor (v$version) Memory Statistics Reporter.";
+  writeln "\040-------------------------------------------------";
+  writeln "\040+Memory Usage Summary.";
+  /bin/free
+  writeln;
+  writeln "\040+Virtual Memory Statistics.";
+  /usr/bin/vmstat
+  writeln "\040----------------------------------------- --- -- -";
+  return 0;
+fi
+
+return 1;

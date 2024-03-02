@@ -1,0 +1,114 @@
+### All.
+
+if [ $show -eq 1 ]; then
+  if [ $config -eq 1 ]; then
+
+    ### Generic Header.
+    writeln "Realtime Config...\n";
+    writeln "! netmon v$version configuration";
+    writeln "! device_name: $nickname";
+    writeln "! displaying all configurations.";
+    writeln;
+
+    local line_count=0;
+    local rec_id=0;
+    ### Display Internals
+    load_records "$config_dir/internals";
+    while parse_record $rec_id; do
+      writeln "%d index $rec_id.";
+      local item=1;
+      local temp_item=1;
+      echo -n "$data_type $type_id";
+      while true; do
+        if [ "${field[$item]}" ]; then
+          echo -n "\040${field[$item]}";
+          field[$temp_item]=${field[$item]};
+          (( temp_item++ ));
+        fi
+        [ $item = $MAX_FIELDS ] && break;
+        (( item++ ));
+      done;
+      writeln;
+      (( line_count++ ));
+      ### End Of Display.
+      (( rec_id++ ));
+    done;
+    writeln "!";
+
+    rec_id=0;
+    ### Display Hosts.
+    load_records "$config_dir/hosts";
+    while parse_record $rec_id; do
+      writeln "%d index $rec_id.";
+      local item=1;
+      local temp_item=1;
+      if [ "$data_type" = "host" ]; then
+        writeln "$data_type $type_id";
+        while true; do
+          if [ "${field[$item]}" ]; then
+            writeln "\040${field[$item]}";
+            field[$temp_item]=${field[$item]};
+            (( temp_item++ ));
+          fi
+          [ $item = $MAX_FIELDS ] && break;
+          (( item++ ));
+        done;
+      fi
+      writeln "!";
+      (( line_count++ ));
+      ### End Of Display.
+      (( rec_id++ ));
+    done;
+
+    rec_id=0;
+    ### Display Groups
+    load_records "$config_dir/groups";
+    while parse_record $rec_id; do
+      writeln "%d index $rec_id.";
+      local item=1;
+      local temp_item=1;
+      writeln "$data_type $type_id";
+      while true; do
+        if [ "${field[$item]}" ]; then
+          writeln "\040${field[$item]}";
+          field[$temp_item]=${field[$item]};
+          (( temp_item++ ));
+        fi
+        [ $item = $MAX_FIELDS ] && break;
+        (( item++ ));
+      done;
+      writeln "!";
+      (( line_count++ ));
+      ### End Of Display.
+      (( rec_id++ ));
+    done;
+
+    rec_id=0;
+    ### Display Features
+    load_records "$config_dir/features";
+    while parse_record $rec_id; do
+      writeln "%d index $rec_id.";
+      local item=1;
+      local temp_item=1;
+      writeln "$data_type $type_id";
+      while true; do
+        if [ "${field[$item]}" ]; then
+          writeln "\040${field[$item]}";
+          field[$temp_item]=${field[$item]};
+          (( temp_item++ ));
+        fi
+        [ $item = $MAX_FIELDS ] && break;
+        (( item++ ));
+      done;
+      writeln "!";
+      (( line_count++ ));
+      ### End Of Display.
+      (( rec_id++ ));
+    done;
+
+    writeln "! total \"$line_count\"";
+    return 0;
+  fi
+fi
+
+return 1;

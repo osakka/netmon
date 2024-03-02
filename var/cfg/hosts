@@ -1,0 +1,25 @@
+host test_2:description none:group 1:ipa 127.0.0.1:request echo_reply:request http_1.0:alert email omar:alert sessions
+host test_3:description none:group 1:ipa 127.0.0.1:request ns_lookup:alert sessions
+host test_4:description none:group 2:ipa 127.0.0.1:request echo_reply:request http_1.0:alert email omar:alert sessions
+host test_5:description none:group 2:ipa 127.0.0.1:request ns_lookup:alert sessions
+host test_6:description none:group 2:ipa 127.0.0.1:request echo_reply:request http_1.0:alert email omar:alert sessions
+host test_7:description none:group 3:ipa 127.0.0.1:request ns_lookup:alert sessions
+host test_8:description none:group 3:ipa 127.0.0.1:request echo_reply:request http_1.0:alert email omar:alert sessions
+host test_9:description none:group 3:ipa 127.0.0.1:request ns_lookup:alert sessions
+host test_10:description none:group 4:ipa 127.0.0.1:request echo_reply:request http_1.0:alert email omar:alert sessions
+host test_11:description none:group 3:ipa 127.0.0.1:request ns_lookup:alert sessions
+host test_12:description none:group 4:ipa 127.0.0.1:request echo_reply:request http_1.0:alert email omar:alert sessions
+host test_13:description none:group 5:ipa 127.0.0.1:request ns_lookup:alert sessions
+host test_14:description none:group 5:ipa 127.0.0.1:request echo_reply:request http_1.0:alert email omar:alert sessions
+host test_15:description none:group 1:ipa 127.0.0.1:request ns_lookup:alert sessions
+host test_16:description none:group 6:ipa 127.0.0.2:request echo_reply:request http_1.0:alert email omar:alert sessions
+host test_17:description none:group 2:ipa 127.0.0.2:request ns_lookup:alert sessions
+host test_18:description none:group 6:ipa 127.0.0.2:request echo_reply:request http_1.0:alert email omar:alert sessions
+host test_19:description none:group 3:ipa 127.0.0.3:request ns_lookup:alert sessions
+host test_20:description none:group 7:ipa 127.0.0.4:request echo_reply:request http_1.0:alert email omar:alert sessions
+host test_21:description none:group 5:ipa 127.0.0.5:request ns_lookup:alert sessions
+host coulomb1:group 1:ipa 192.168.129.1
+host shaf:group 1:shutdown:ipa 127.0.0.1
+host jacko:group 1:shutdown:ipa 192.168.69.125:description Jackos:group 1:shutdown
+host test_1:description none:group 1:ipa 194.112.32.1:request ns_lookup:alert sessions:group 1:shutdown
+host craig:group 1:shutdown:description this:ipa 127.0.0.1

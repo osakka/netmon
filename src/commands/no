@@ -1,0 +1,4 @@
+### Negate (no).
+
+  [ "$cmd_pos" = "0" ] && negate=1 && return 0;
+  return 1;

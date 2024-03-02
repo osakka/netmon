@@ -1,0 +1,14 @@
+# PLUGIN: Traceroute
+# AUTHOR: Omar Al-Sakka
+
+  local temp_loop=0;
+
+  if [ "${user_text[$next_cmd_pos]}" ]; then
+    trap "break;" 2; # Alow_break.
+    writeln;
+    writeln "Type escape sequence to abort.";
+    /usr/bin/traceroute -w 2 ${user_text[$next_cmd_pos]};
+    break;
+  fi
+
+return 1;

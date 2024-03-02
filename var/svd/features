@@ -1,0 +1,6 @@
+request echo_reply:packetsize 1000:ttl 100:reply timeout 2000:reply thresh-hold 1000
+request http_1.0:reply timeout 2000:reply thresh-hold 1000
+request ns_lookup:reply timeout 2000:reply thresh-hold 1000
+alert sessions
+alert email
+alert sms

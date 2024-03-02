@@ -1,0 +1,40 @@
+### Sessions.
+
+### Display Status.
+if [ $show -eq 1 ]; then
+  local rec_id=0;
+  ### Show Current Status.
+  echo -n "\n PROCESS\tUSERNAME       TERMINAL\n";
+  writeln "%u \040-----------------------------------------";
+    load_records "$config_dir/locks";
+    while parse_record $rec_id; do
+      writeln "%d record index $rec_id.";
+      local item=1;
+      ### Type of Show Selection.
+      if get_value "terminal"; then
+        echo -n " ";
+        while [ "${field[$item]}" ]; do
+          field_type=${field[$item]/ */};
+          field_data=(${field[$item]/*$field_type /});
+          if [ "$field_type" = "feature_return" ]; then
+            [ "$field_data" = "0" ] && field_data="up";
+            [ "$field_data" = "1" ] && field_data="down";
+            [ "$field_data" = "A" ] && field_data="Administrativly down";
+            [ "$field_data" = "I" ] && field_data="IP undefined";
+          fi
+          justify "$field_data" "13";
+          echo -n "$field_data $spacer";
+          [ $item = $MAX_FIELDS ] && break;
+          (( item++ ));
+        done;
+        writeln;
+      fi
+      (( line_count++ ));
+      ### End Of Display.
+      (( rec_id++ ));
+    done;
+  writeln "%u \040-------------------------------- --- -- -";
+  return 0;
+fi
+
+return 1;

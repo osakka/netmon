@@ -1,0 +1,7 @@
+group 1:name TEST Group:track test_1
+group 2:name another test:track test_1
+group 3:name GROUP100:track test_2
+group 4:name GROUP101
+group 5:name GROUP102:track test_3
+group 6:shutdown:track test_4
+group 7:track imo:name TEST:track test_5
