@@ -1,5 +1,5 @@
- Welcome to NetMon...
- --------------------
+ Welcome to NetMon
+ -----------------
 
  -[group record specs]------------------------------------
  type          value            unique    min. entries max
